@@ -16,3 +16,10 @@ Format: data ISO (DD-MM-YYYY) — scurtă descriere. Păstrăm intrările concis
 - ESLint: ignorare fișiere Prisma generate pentru build stabil
 - Git repo inițializat la rădăcină și setat remote `origin` către `https://github.com/thisisfruitgtm/noova.git`
 
+2025-08-13 — Auth, API-uri, microsite, seed, shadcn/ui
+- NextAuth (Credentials + PrismaAdapter), pagină `/login`
+- API: `POST/GET /api/messages` (zod + rate-limit), `POST /api/links` + redirect `/r/[slug]`, `POST /api/qr` (SVG), `GET/PATCH /api/brandkit`
+- Microsite public `/u/[username]`
+- Seed: utilizator demo `demo@noova.local` / `secret123` (username `demo`)
+- shadcn/ui: Button, Card, Input, Textarea, Dialog; pagini funcționale `templates` (grilă demo + dialog), `calendar` (programări locale)
+

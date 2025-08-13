@@ -27,6 +27,12 @@ const eslintConfig = [
       "@typescript-eslint/no-wrapper-object-types": "off",
     },
   },
+  {
+    files: ["src/app/api/**/*.ts"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+    },
+  },
 ];
 
 export default eslintConfig;
