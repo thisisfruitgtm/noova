@@ -1,0 +1,162 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+// Postgres (Neon) datasource
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String   @id @default(cuid())
+  email      String   @unique
+  name       String?
+  role       Role     @default(CRAFTER)
+  city       String?
+  county     String?
+  username   String?  @unique
+  socials    Json?
+  brandKit   BrandKit?
+  createdAt  DateTime @default(now())
+
+  assets     Asset[]
+  templates  Template[]
+  posts      Post[]
+  page       Page?
+  messages   Message[]
+  links      Link[]
+  metrics    Metric[]
+  products   ProductLite[]
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  CRAFTER
+  AGENCY
+}
+
+model BrandKit {
+  id           String   @id @default(cuid())
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String   @unique
+  logoUrl      String?
+  colors       Json     // { primary, secondary, accent, bg, text, hi }
+  fontHeadings String?
+  fontBody     String?
+  bio          String?
+  crafts       Json     // string[]
+  specialties  Json     // string[]
+}
+
+model Asset {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  url       String
+  kind      AssetKind
+  tags      Json     // string[]
+  createdAt DateTime @default(now())
+}
+
+enum AssetKind {
+  image
+  pdf
+}
+
+model Template {
+  id          String       @id @default(cuid())
+  user        User?        @relation(fields: [userId], references: [id])
+  userId      String?
+  kind        TemplateKind
+  title       String
+  contentJSON Json
+  size        String?
+  variables   Json         // string[]
+}
+
+enum TemplateKind {
+  social
+  print
+  campaign
+}
+
+model Post {
+  id          String     @id @default(cuid())
+  user        User       @relation(fields: [userId], references: [id])
+  userId      String
+  title       String
+  channel     Channel
+  images      Json       // string[]
+  caption     String?
+  hashtags    Json       // string[]
+  scheduledAt DateTime?
+  status      PostStatus @default(draft)
+  createdAt   DateTime   @default(now())
+}
+
+enum Channel {
+  instagram
+  facebook
+  tiktok
+  manual
+}
+
+enum PostStatus {
+  draft
+  scheduled
+  sent
+}
+
+model Page {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique
+  slug      String   @unique
+  published Boolean  @default(false)
+  blocks    Json
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  fromEmail String
+  name      String
+  subject   String?
+  body      String
+  createdAt DateTime @default(now())
+  readAt    DateTime?
+}
+
+model Link {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  slug      String   @unique
+  targetUrl String
+  clicks    Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model Metric {
+  id     String   @id @default(cuid())
+  user   User     @relation(fields: [userId], references: [id])
+  userId String
+  kind   String
+  value  Int      @default(0)
+  date   DateTime
+}
+
+model ProductLite {
+  id          String   @id @default(cuid())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  title       String
+  priceCents  Int      // store RON as integer cents
+  currency    String   @default("RON")
+  description String?
+  imageUrl    String?
+} 
