@@ -39,6 +39,7 @@
 - Înainte de cod: verifică `PROJECT_OVERVIEW.md` (scope, module, API, date, KPI) și rolul implicat din `ROLE_*.md`.
 - Dacă schimbi comportament/flux/API/UI: actualizează documentele în același PR.
 - Dacă introduci rol/funcție nouă: adaugă `ROLE_*.md` și indexează în `00-ROLURI-SI-DOCUMENTE.md`.
+- Actualizează întotdeauna `docs/STATUS_PER_ROLE.md` (TODO/DONE pe roluri) în același PR.
 
 #### Module canonice (din Overview)
 - BrandKit, Bibliotecă media, Șabloane, Calendar & programare, Microsite (+ Link‑in‑bio + QR), Contact Hub, Analitice, Linkuri scurte & tracking, Catalog PDF.
